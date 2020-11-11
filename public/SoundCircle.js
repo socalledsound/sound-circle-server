@@ -62,7 +62,7 @@ class SoundCircle {
             this.size += 5;
         }
         console.log('increased size: ', this.size);
-        this.osc.freq(this.size * 4);
+        this.osc.freq(this.size * 10);
     }
 
     initSound(){

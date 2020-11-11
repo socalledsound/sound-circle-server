@@ -1,15 +1,15 @@
 const socket = io.connect();
-
+let env;
 socket.on('connect', () => {
     console.log('client connected')
 })
 
 let myCircle;
-let circles = [];
+let otherCircles = [];
 
 function setup(){
     createCanvas(600, 600);
-    frameRate(10);
+    env = new p5.Envelope(0.01, 0.7, 0.3, 0.0);
     const myCircleOpts = {
         x: random(50, width-50),
         y: random(50, height-50),
@@ -17,41 +17,29 @@ function setup(){
         col: [random(255), random(255), random(255)],
     }
     myCircle = new SoundCircle(socket.id, myCircleOpts.x, myCircleOpts.y, myCircleOpts.size, myCircleOpts.col);
-    circles.push(myCircle);
+    // circles.push(myCircle);
+    // const msg = myCircle;
     const data = {
         x: myCircle.pos.x,
         y: myCircle.pos.y,
         size: myCircle.size,
         col: myCircle.col,
+        clicked: myCircle.clicked,
+        freq: myCircle.freq,
     }
 
     socket.emit('start', data);
 
     socket.on('heartbeat', (data) => {
         
-        // circles = data;
+         otherCircles = [];
 
-            // console.log(data);
-
-        data.forEach((item) => {
-            const { id, x, y, size, col} = item;
-            // console.log(id);
-            const existingCircles = circles.filter(circle => circle.id === id);
-            if(existingCircles.length > 0){
-                //console.log(existingCircles);
-                existingCircles.forEach(circle => {
-                    circle.pos.x = x;
-                    circle.pos.y = y;
-                    circle.size = size;
-                    circle.col = col;
-                })
-
-            } else {
-                circles.push(new SoundCircle(id, x, y, size, col))
+        data.forEach(item => {
+            console.log(item.id);
+            if(item.id != socket.id){
+                otherCircles.push(item);
             }
-            
-        })
-    
+        })    
     })
 
 
@@ -60,24 +48,22 @@ function setup(){
 function draw(){
     background(120,90,200);
 
-    circles.forEach(circle => {
-        circle.move();
-        circle.checkEdges();
-        circle.display();
+    otherCircles.forEach(circle => {
+        // playSound(circle);
+        displayCircle(circle);
     })
-
-
-    circles.forEach(circle => {
-        const myCircle = circles.filter( circle => circle.id === socket.id);
-    })
-
-
+    
+     myCircle.move();
+     myCircle.checkEdges();
+     myCircle.display();
 
     const data = {
         x: myCircle.pos.x,
         y: myCircle.pos.y,
         size: myCircle.size,
         col: myCircle.col,
+        clicked: myCircle.clicked,
+        freq: myCircle.freq,
     }
 
 
@@ -88,26 +74,35 @@ function draw(){
 
 
 function mousePressed(){
-    console.log(socket.id);
-    circles.forEach(circle => {
-        const myCircle = circles.filter( circle => circle.id === socket.id);
-    })
-
-    console.log(myCircle);
     myCircle.checkClick(mouseX, mouseY);
-    
-    console.log(circles);
 }
 
 function mouseReleased(){
-    circles.forEach(circle => {
-        const myCircle = circles.filter( circle => circle.id === socket.id);
-    })
     if(myCircle.clicked){
         myCircle.setSpeed(mouseX, mouseY);
-    }
-   
-  
+    }  
     myCircle.clicked = false;
-  
+}
+
+
+function displayCircle(circle){
+    const { x, y, size, col, clicked} = circle;
+    fill(col);
+    stroke(220, 200, 220);
+    const ellipseStroke = clicked ? 9 : 3;
+    strokeWeight(ellipseStroke);
+    ellipse(x, y, size);
+}
+
+function playSound(circle){
+    const sound = initSound(circle.size);
+    sound.start();
+    env.play(sound);
+}
+
+
+function initSound(size){
+    const osc = new p5.Oscillator('sine');
+    osc.freq(size * 4);
+    return osc
 }
