@@ -22,6 +22,7 @@ class SoundCircle {
             console.log('clicked');
             this.playSound();
             this.increaseSize();
+            return true
         }
     }
 

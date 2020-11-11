@@ -25,7 +25,6 @@ function setup(){
         size: myCircle.size,
         col: myCircle.col,
         clicked: myCircle.clicked,
-        freq: myCircle.freq,
     }
 
     socket.emit('start', data);
@@ -35,11 +34,14 @@ function setup(){
          otherCircles = [];
 
         data.forEach(item => {
-            console.log(item.id);
             if(item.id != socket.id){
                 otherCircles.push(item);
             }
         })    
+    })
+
+    socket.on('playSound', (freq) => {
+        playSound(freq);
     })
 
 
@@ -63,7 +65,6 @@ function draw(){
         size: myCircle.size,
         col: myCircle.col,
         clicked: myCircle.clicked,
-        freq: myCircle.freq,
     }
 
 
@@ -74,7 +75,10 @@ function draw(){
 
 
 function mousePressed(){
-    myCircle.checkClick(mouseX, mouseY);
+    const transmitSound = myCircle.checkClick(mouseX, mouseY);
+    if(transmitSound){
+        socket.emit('playSound', myCircle.freq); 
+    }
 }
 
 function mouseReleased(){
@@ -94,15 +98,15 @@ function displayCircle(circle){
     ellipse(x, y, size);
 }
 
-function playSound(circle){
-    const sound = initSound(circle.size);
+function playSound(freq){
+    const sound = initSound(freq);
     sound.start();
     env.play(sound);
 }
 
 
-function initSound(size){
+function initSound(freq){
     const osc = new p5.Oscillator('sine');
-    osc.freq(size * 4);
+    osc.freq(freq4);
     return osc
 }
