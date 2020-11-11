@@ -42,7 +42,7 @@ function setup(){
                     circle.pos.x = x;
                     circle.pos.y = y;
                     circle.size = size;
-                    // circle.col = col;
+                    circle.col = col;
                 })
 
             } else {

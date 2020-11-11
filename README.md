@@ -1,2 +1,2 @@
-# simple sound circle game for sockets demo
+# sound circle game server code
 
