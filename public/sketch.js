@@ -9,6 +9,7 @@ let circles = [];
 
 function setup(){
     createCanvas(600, 600);
+    frameRate(10);
     const myCircleOpts = {
         x: random(50, width-50),
         y: random(50, height-50),
