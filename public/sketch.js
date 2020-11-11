@@ -1,5 +1,5 @@
 const socket = io.connect();
-let env;
+let env, osc;
 socket.on('connect', () => {
     console.log('client connected')
 })
@@ -10,6 +10,9 @@ let otherCircles = [];
 function setup(){
     createCanvas(600, 600);
     env = new p5.Envelope(0.01, 0.7, 0.3, 0.0);
+    osc = new p5.Oscillator('sine');
+    osc.start();
+    osc.amp(0);
     const myCircleOpts = {
         x: random(50, width-50),
         y: random(50, height-50),
@@ -40,7 +43,8 @@ function setup(){
         })    
     })
 
-    socket.on('playSound', (freq) => {
+    socket.on('playFreq', (freq) => {
+        console.log('received play sound message');
         playSound(freq);
     })
 
@@ -77,7 +81,9 @@ function draw(){
 function mousePressed(){
     const transmitSound = myCircle.checkClick(mouseX, mouseY);
     if(transmitSound){
-        socket.emit('playSound', myCircle.freq); 
+        console.log('transmitting');
+        const freq = myCircle.size * 10;
+        socket.emit('playSound', freq); 
     }
 }
 
@@ -99,14 +105,14 @@ function displayCircle(circle){
 }
 
 function playSound(freq){
-    const sound = initSound(freq);
-    sound.start();
-    env.play(sound);
+    // const sound = initSound(freq);
+    osc.freq(freq);
+    env.play(osc);
 }
 
 
-function initSound(freq){
-    const osc = new p5.Oscillator('sine');
-    osc.freq(freq4);
-    return osc
-}
+// function initSound(freq){
+   
+   
+//     return osc
+// }

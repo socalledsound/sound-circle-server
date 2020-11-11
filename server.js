@@ -15,7 +15,7 @@ class Circle {
         this.size = size;
         this.col = col;
         this.clicked = clicked;
-        this.freq = freq;
+
     }
 }
 
@@ -46,6 +46,11 @@ io.on('connection', function(socket){
            };
         })
     });
+
+    socket.on('playSound', (freq) => {
+        console.log('play sound message received', freq);
+        io.sockets.emit('playFreq', freq);
+    })
 
 
     socket.on('disconnect', function() {
