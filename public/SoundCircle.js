@@ -7,20 +7,17 @@ class SoundCircle {
         this.fc = 0.1;
         this.friction = 0.001;
         this.maxSpeed = 10.0;
-        this.clicked;
         this.size  = size;
         this.mass = this.size/30;
         this.col = col;
         this.clicked = false;
-        this.initSound(); 
+ 
     }
 
     checkClick(mx, my){
         const distMouse = dist(mx, my, this.pos.x, this.pos.y);
         if(distMouse < this.size){
             this.clicked = true;
-            console.log('clicked');
-            this.playSound();
             this.increaseSize();
             return true
         }
@@ -62,17 +59,8 @@ class SoundCircle {
         } else {
             this.size += 5;
         }
-        console.log('increased size: ', this.size);
-        // this.osc.freq(this.size * 10);
     }
 
-    initSound(){
-        // this.osc = new p5.Oscillator('sine');
-        // this.env = new p5.Envelope(0.01, 0.7, 0.3, 0.0)
-        // this.normalVolume = 0.4;
-        // this.osc.freq(this.size * 4);
-        
-    }
 
     move(){
         this.velocity.add(this.acceleration);
@@ -82,10 +70,6 @@ class SoundCircle {
         this.velocity.mult(0.99);
     }
 
-    playSound(){
-        // this.osc.start();
-        // this.env.play(this.osc);
-    }
 
     setSpeed(mx, my){
         const mousePos = createVector(mx, my);

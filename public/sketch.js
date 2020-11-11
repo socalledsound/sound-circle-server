@@ -105,14 +105,6 @@ function displayCircle(circle){
 }
 
 function playSound(freq){
-    // const sound = initSound(freq);
     osc.freq(freq);
     env.play(osc);
 }
-
-
-// function initSound(freq){
-   
-   
-//     return osc
-// }
