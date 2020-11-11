@@ -22,7 +22,7 @@ class Circle {
 app.use('/', express.static(__dirname + '/public'));
 // app.use('/mobile', express.static(__dirname + '/public/mobile'));
 
-setInterval(heartbeat, 100);
+setInterval(heartbeat, 33);
 
 function heartbeat(){
     io.sockets.emit('heartbeat', circles)
@@ -40,9 +40,9 @@ io.on('connection', function(socket){
     });
 
     socket.on('update', (data) => {
-       circles.forEach((circle) => {
+       circles.forEach((circle, i) => {
            if(circle => circle.id == socket.id){
-                circle = data;
+                circles[i] = data;
            };
         })
     });
@@ -50,6 +50,10 @@ io.on('connection', function(socket){
 
     socket.on('disconnect', function() {
         console.log("Client has disconnected");
+        console.log(circles);
+        newCircles = circles.filter(circle => circle.id != socket.id);
+        circles = newCircles;
+        console.log(circles)
       });
 
 })
