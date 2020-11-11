@@ -22,6 +22,7 @@ function setup(){
     myCircle = new SoundCircle(socket.id, myCircleOpts.x, myCircleOpts.y, myCircleOpts.size, myCircleOpts.col);
     // circles.push(myCircle);
     // const msg = myCircle;
+
     const data = {
         x: myCircle.pos.x,
         y: myCircle.pos.y,
@@ -55,7 +56,6 @@ function draw(){
     background(120,90,200);
 
     otherCircles.forEach(circle => {
-        // playSound(circle);
         displayCircle(circle);
     })
     
