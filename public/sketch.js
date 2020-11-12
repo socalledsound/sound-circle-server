@@ -58,7 +58,7 @@ function setup(){
 }
 
 function draw(){
-    background(120,90,200);
+    // background(120,90,200);
 
     otherCircles.forEach(circle => {
         displayCircle(circle);
