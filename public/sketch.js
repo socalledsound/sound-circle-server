@@ -1,4 +1,4 @@
-const socket = io.connect();
+const socket = io.connect('http://localhost:7000');
 let env, osc;
 socket.on('connect', () => {
     console.log('client connected')
@@ -9,10 +9,14 @@ let otherCircles = [];
 
 function setup(){
     createCanvas(600, 600);
+    frameRate(11);
     env = new p5.Envelope(0.01, 0.7, 0.3, 0.0);
     osc = new p5.Oscillator('sine');
     osc.start();
-    osc.amp(0);
+    osc.amp(1.0);
+    env.play(osc);
+    
+    
     const myCircleOpts = {
         x: random(50, width-50),
         y: random(50, height-50),
@@ -37,7 +41,7 @@ function setup(){
         
          otherCircles = [];
 
-        data.forEach(item => {
+        data.forEach((item, i) => {
             if(item.id != socket.id){
                 otherCircles.push(item);
             }
@@ -46,7 +50,8 @@ function setup(){
 
     socket.on('playFreq', (freq) => {
         console.log('received play sound message');
-        playSound(freq);
+        osc.freq(freq);
+        env.play(osc);
     })
 
 

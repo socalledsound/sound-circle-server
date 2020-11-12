@@ -29,7 +29,7 @@ class SoundCircle {
         } else if (this.pos.x > width){
             this.pos.x = 0 + this.size/2;
         }
-        if(this.pos.y < 0 + this.size){
+        if(this.pos.y < 0 ){
             this.pos.y = height;
         } else if(this.pos.y > height){
             this.pos.y = 0;
