@@ -1,4 +1,4 @@
-const socket = io.connect('http://localhost:7000');
+const socket = io.connect();
 let env, osc;
 socket.on('connect', () => {
     console.log('client connected')
