@@ -9,7 +9,7 @@ let otherCircles = [];
 
 function setup(){
     createCanvas(600, 600);
-    frameRate(11);
+    frameRate(20);
     env = new p5.Envelope(0.01, 0.7, 0.3, 0.0);
     osc = new p5.Oscillator('sine');
     osc.start();
@@ -58,7 +58,7 @@ function setup(){
 }
 
 function draw(){
-    // background(120,90,200);
+    background(120,90,200);
 
     otherCircles.forEach(circle => {
         displayCircle(circle);
