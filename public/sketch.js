@@ -39,15 +39,35 @@ function setup(){
 
     socket.on('heartbeat', (data) => {
         // loop();
-        background(120,90,200);
-        console.log('looping');
+
+        // console.log('looping');
          otherCircles = [];
 
         data.forEach((item, i) => {
             if(item.id != socket.id){
                 otherCircles.push(item);
             }
-        })    
+        })  
+        background(120,90,200);
+        otherCircles.forEach(circle => {
+            displayCircle(circle);
+        })  
+
+        myCircle.move();
+        myCircle.checkEdges();
+        myCircle.display();
+   
+       const data = {
+           x: myCircle.pos.x,
+           y: myCircle.pos.y,
+           size: myCircle.size,
+           col: myCircle.col,
+           clicked: myCircle.clicked,
+       }
+   
+   
+   
+       socket.emit('update', data);
     })
     
    
@@ -63,26 +83,10 @@ function setup(){
 function draw(){
     
 
-    otherCircles.forEach(circle => {
-        displayCircle(circle);
-    })
+
     
-     myCircle.move();
-     myCircle.checkEdges();
-     myCircle.display();
 
-    const data = {
-        x: myCircle.pos.x,
-        y: myCircle.pos.y,
-        size: myCircle.size,
-        col: myCircle.col,
-        clicked: myCircle.clicked,
-    }
-
-
-
-    socket.emit('update', data);
-    console.log('not looping');
+    // console.log('not looping');
     // noLoop();
     
 }
