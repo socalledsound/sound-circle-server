@@ -57,7 +57,7 @@ function setup(){
         myCircle.checkEdges();
         myCircle.display();
    
-       const data = {
+       const newData = {
            x: myCircle.pos.x,
            y: myCircle.pos.y,
            size: myCircle.size,
@@ -67,7 +67,7 @@ function setup(){
    
    
    
-       socket.emit('update', data);
+       socket.emit('update', newData);
     })
     
    
