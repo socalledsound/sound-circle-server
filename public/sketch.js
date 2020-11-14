@@ -80,16 +80,16 @@ function setup(){
 
 }
 
-function draw(){
+// function draw(){
     
 
 
     
 
-    // console.log('not looping');
-    // noLoop();
+//     // console.log('not looping');
+//     // noLoop();
     
-}
+// }
 
 
 function mousePressed(){
