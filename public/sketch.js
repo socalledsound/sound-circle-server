@@ -39,6 +39,7 @@ function setup(){
 
     socket.on('heartbeat', (data) => {
         loop();
+        console.log('looping');
          otherCircles = [];
 
         data.forEach((item, i) => {
@@ -48,7 +49,7 @@ function setup(){
         })    
     })
     
-    console.log('looping');
+   
     socket.on('playFreq', (freq) => {
         console.log('received play sound message');
         osc.freq(freq);
