@@ -5,7 +5,7 @@ socket.on('connect', () => {
 })
 
 let myCircle;
-let otherCircles = [];
+let otherCircles = new Map;
 
 function setup(){
     createCanvas(600, 600);
@@ -41,17 +41,18 @@ function setup(){
         // loop();
 
         // console.log('looping');
-         otherCircles = [];
-
+        //  otherCircles = [];
+        background(120,90,200);
         data.forEach((item, i) => {
             if(item.id != socket.id){
-                otherCircles.push(item);
+                displayCircle(item);
+                // otherCircles.push(item);
             }
         })  
-        background(120,90,200);
-        otherCircles.forEach(circle => {
-            displayCircle(circle);
-        })  
+       
+        // otherCircles.forEach(circle => {
+        //     displayCircle(circle);
+        // })  
 
         myCircle.move();
         myCircle.checkEdges();
