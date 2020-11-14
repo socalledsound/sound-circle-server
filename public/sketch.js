@@ -38,7 +38,8 @@ function setup(){
     socket.emit('start', data);
 
     socket.on('heartbeat', (data) => {
-        loop();
+        // loop();
+        background(120,90,200);
         console.log('looping');
          otherCircles = [];
 
@@ -60,7 +61,7 @@ function setup(){
 }
 
 function draw(){
-    background(120,90,200);
+    
 
     otherCircles.forEach(circle => {
         displayCircle(circle);
@@ -82,7 +83,7 @@ function draw(){
 
     socket.emit('update', data);
     console.log('not looping');
-    noLoop();
+    // noLoop();
     
 }
 
