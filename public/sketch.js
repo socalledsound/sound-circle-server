@@ -9,7 +9,7 @@ let otherCircles = [];
 
 function setup(){
     createCanvas(600, 600);
-    frameRate(1);
+    // frameRate(1);
     env = new p5.Envelope(0.01, 0.7, 0.3, 0.0);
     osc = new p5.Oscillator('sine');
     osc.start();
