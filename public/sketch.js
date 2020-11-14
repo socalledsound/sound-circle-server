@@ -38,7 +38,7 @@ function setup(){
     socket.emit('start', data);
 
     socket.on('heartbeat', (data) => {
-        
+        loop();
          otherCircles = [];
 
         data.forEach((item, i) => {
@@ -79,7 +79,7 @@ function draw(){
 
 
     socket.emit('update', data);
-
+    noLoop();
 }
 
 
