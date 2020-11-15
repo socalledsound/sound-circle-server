@@ -36,11 +36,11 @@ class SoundCircle {
     }
 
     display(){
-        fill(this.col);
-        stroke(220, 200, 220);
-        const ellipseStroke = this.clicked ? 9 : 3;
-        strokeWeight(ellipseStroke);
-        ellipse(this.pos.x, this.pos.y, this.size);
+        // fill(this.col);
+        // stroke(220, 200, 220);
+        // const ellipseStroke = this.clicked ? 9 : 3;
+        // strokeWeight(ellipseStroke);
+        // ellipse(this.pos.x, this.pos.y, this.size);
         if(this.clicked){
             this.drawLine(this.pos.x, this.pos.y, mouseX, mouseY);   
         } 
