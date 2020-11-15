@@ -1,6 +1,5 @@
 class SoundCircle {
-    constructor(id, x, y, size, col){
-        this.id = id;
+    constructor(x, y, size, col){
         this.pos = createVector(x, y);
         this.velocity = createVector(0, 0);
         this.acceleration = createVector(0, 0);
