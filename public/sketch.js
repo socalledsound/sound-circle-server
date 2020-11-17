@@ -158,7 +158,7 @@ function displayCircle(circle){
 
 function playSound(freq){
     osc.freq(freq);
-    osc.amp(1.0);
+    // osc.amp(1.0);
     env.play(osc);
 }
 
