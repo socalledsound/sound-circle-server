@@ -10,31 +10,27 @@ const Client = require('./Client');
 const LOCALHOSTPORT = 7000;
 
 // let circles = new Map;
-let circles = new Map;
-
-let clients = new Set;
-
-
+let players = new Map;
 
 app.use('/', express.static(__dirname + '/public'));
-// app.use('/mobile', express.static(__dirname + '/public/mobile'));
-
-// setInterval(heartbeat, 30);
-
-function heartbeat(){
-    io.sockets.emit('heartbeat', clients)
-}
 
 
 class Circle {
-    constructor(id, x, y, size, col, clicked){
+    constructor(id, x, y, size, col){
         this.id = id;
-        this.x = x;
-        this.y = y;
+        this.pos = {x: x, y: y};
         this.size = size;
         this.col = col;
-        this.clicked = clicked;
+    }
+}
 
+
+
+class Player {
+    constructor(id, circleData){
+        this.id = id;
+        this.circle = new Circle(id, circleData.pos.x, circleData.pos.y, circleData.size, circleData.col);
+        this.messages = [];
     }
 }
 
@@ -44,25 +40,25 @@ io.on('connection', function(socket){
     console.log('client connected, new player id is:' + socket.id);
 
     socket.on('start', (data) => {
-        const circle = new Circle(socket.id, data.x, data.y, data.size, data.col, data.clicked, data.freq)
-        // console.log(data);
-        circles.set(socket.id, circle);
-        console.log(circles);
+        const player = new Player(socket.id, data)
+        console.log(data);
+        players.set(socket.id, player);
+        console.log(players);
     });
 
     socket.on('update', (data) => {
-        // console.log(circles);
+        // console.log(players);
         if(data.id){
-            circles.set(data.id, data);
+            const updatedPlayer = {
+                id: data.id,
+                circle: data.circle,
+                messages: data.messages,
+            }
+            players.set(data.id, updatedPlayer);
         }
-        
-        // console.log(circles);
-        // console.log('update running');
-        // console.log(circles);
-        const newData = [...circles.values()];
-        // console.log('NEW DATa', newData);
-        // const circlesSize = circles.size;
-        // console.log(otherData);
+
+        const newData = [...players.values()];
+
         socket.emit('state-update', newData );
 
     });
@@ -76,7 +72,7 @@ io.on('connection', function(socket){
     socket.on('disconnect', function() {
         console.log("Client has disconnected");
         // console.log(circles);
-        circles.delete(socket.id);
+        players.delete(socket.id);
         // console.log(circles);
       });
 

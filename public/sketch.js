@@ -6,6 +6,7 @@ socket.on('connect', () => {
 
 let myCircle;
 let otherCircles = new Map;
+let myMessages = [];
 
 function setup(){
     createCanvas(600, 600);
@@ -13,7 +14,7 @@ function setup(){
     env = new p5.Envelope(0.01, 0.7, 0.3, 0.0);
     osc = new p5.Oscillator('sine');
     osc.start();
-    osc.amp(1.0);
+    osc.amp(0.0);
     env.play(osc);
     
     
@@ -27,16 +28,15 @@ function setup(){
     // circles.push(myCircle);
     // const msg = myCircle;
     // console.log(socket.id);
-    const data = {
-        
-        x: myCircle.pos.x,
-        y: myCircle.pos.y,
+    const initCircleData = {
+        pos: { x: myCircle.pos.x, y: myCircle.pos.y},
         size: myCircle.size,
         col: myCircle.col,
-        clicked: myCircle.clicked,
+        // clicked: myCircle.clicked,
     }
+    
 
-    socket.emit('start', data);
+    socket.emit('start', initCircleData);
 
     socket.on('state-update', (data) => {
         // console.log(data.get(socket.id));
@@ -45,8 +45,11 @@ function setup(){
       
         //     console.log(data);
             data.forEach((item, i) => {
-
-                otherCircles.set(item.id, item);
+                if(item.id){
+                    otherCircles.set(item.id, item.circle);
+                    myMessages = item.messages;
+                }
+                
 
             })  
         
@@ -66,6 +69,10 @@ function setup(){
         env.play(osc);
     })
 
+    // socket.on('newMessage', (message) => {
+    //     myMessages.
+    // })
+
 
 }
 
@@ -74,24 +81,43 @@ function draw(){
    background(120,90,200);
    myCircle.move();
    myCircle.checkEdges();
+   const collision = myCircle.checkCircles(otherCircles, socket.id, socket)
+   if(collision){
+    console.log(collision);
+       console.log("colliding");
+       console.log('transmitting');
 
+   };
     
 
-   const newData = {
-    id:socket.id,
-    x: myCircle.pos.x,
-    y: myCircle.pos.y,
-    size: myCircle.size,
-    col: myCircle.col,
-    clicked: myCircle.clicked,
-}
+//    if(collision){
+
+// }
+
+
 // console.log(otherCircles);
 otherCircles.forEach(circle => {
     // console.log(circle);
     displayCircle(circle);
 })  
-
+   
     myCircle.display();
+
+
+    const circleUpdate = {
+        id:socket.id,
+        pos: {x: myCircle.pos.x, y: myCircle.pos.y},
+        size: myCircle.size,
+        col: myCircle.col,
+        velocity: {x: myCircle.velocity.x, y: myCircle.velocity.y},
+        
+    }
+
+    const newData = {
+        id: socket.id,
+        circle: circleUpdate,
+        messages: myMessages,
+    }
 
     socket.emit('update', newData);
 
@@ -105,10 +131,10 @@ otherCircles.forEach(circle => {
 function mousePressed(){
     const transmitSound = myCircle.checkClick(mouseX, mouseY);
     if(transmitSound){
-        console.log('transmitting');
-        const freq = myCircle.size * 10;
-        playSound(freq);
-        socket.emit('playSound', freq); 
+        // console.log('transmitting');
+        // const freq = myCircle.size * 10;
+        // playSound(freq);
+        // socket.emit('playSound', freq); 
     }
 }
 
@@ -122,15 +148,23 @@ function mouseReleased(){
 
 function displayCircle(circle){
     // console.log(circle.x);
-    const { x, y, size, col, clicked} = circle;
+    const { pos, size, col, clicked} = circle;
     fill(col);
     stroke(220, 200, 220);
     const ellipseStroke = clicked ? 9 : 3;
     strokeWeight(ellipseStroke);
-    ellipse(x, y, size);
+    ellipse(pos.x, pos.y, size);
 }
 
 function playSound(freq){
     osc.freq(freq);
+    osc.amp(1.0);
     env.play(osc);
+}
+
+function transmitSound(){
+    console.log('transmitting');
+    const freq = myCircle.size * 10;
+    playSound(freq);
+    socket.emit('playSound', freq); 
 }
