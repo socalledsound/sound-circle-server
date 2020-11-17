@@ -41,8 +41,8 @@ class SoundCircle {
                  const freq = this.size * 10;
                  if(!this.playing){
                      this.playing = true;
-                     this.osc.amp(1.0);
-                     this.env.play(osc);
+                    //  this.osc.amp(1.0);
+                    //  this.env.play(osc);
                      socket.emit('playSound', freq);
                     setTimeout(()=>this.playing = false, 2000);
                  }
