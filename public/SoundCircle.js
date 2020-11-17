@@ -7,6 +7,7 @@ class SoundCircle {
         this.friction = 0.001;
         this.maxSpeed = 10.0;
         this.size  = size;
+        this.maxSize = 250;
         this.mass = this.size/30;
         this.col = col;
         this.env = new p5.Envelope(0.01, 0.7, 0.3, 0.0);
@@ -85,7 +86,7 @@ class SoundCircle {
     }
 
     increaseSize(){
-        if(this.size > 100){
+        if(this.size > maxSize){
             this.size = 20;
         } else {
             this.size += 5;
