@@ -14,7 +14,7 @@ function setup(){
     env = new p5.Envelope(0.01, 0.7, 0.3, 0.0);
     osc = new p5.Oscillator('sine');
     osc.start();
-    osc.amp(1.0);
+    // osc.amp(1.0);
     env.play(osc);
     
     
@@ -67,6 +67,7 @@ function setup(){
         console.log('received play sound message');
         osc.freq(freq);
         env.play(osc);
+        playSound(freq);
     })
 
     // socket.on('newMessage', (message) => {
