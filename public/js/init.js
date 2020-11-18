@@ -69,8 +69,8 @@ form.addEventListener("submit", processForm);
 const it = colors[Math.floor(Math.random() * colors.length)];
 // console.log(it);
 
-const colorsDiv = document.querySelector('#colors');
-colorsDiv.innerHtml = `the colors are: ${colors.join()}`;
+const colorsHeading = document.querySelector('#colors').innerHTML = `the colors are: ${colors.join()}`;
+// colorsHeading.innerHtml = `the colors are: ${colors.join()}`;
 
 
 function processForm(e) {
