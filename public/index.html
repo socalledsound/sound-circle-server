@@ -3,24 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.8.0/p5.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.8.0/addons/p5.dom.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.8.0/addons/p5.sound.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.1/socket.io.js" integrity="sha512-vGcPDqyonHb0c11UofnOKdSAt5zYRpKI4ow+v6hat4i96b7nHSn8PQyk0sT5L9RECyksp+SztCPP6bqeeGaRKg==" crossorigin="anonymous"></script>
-    <script src="SoundCircle.js"></script>
+    <script src="js/SoundCircle.js"></script>
     <title>sound ball game</title>
 </head>
 <body>
     <div class="header">
         <h1>sounding among us</h1>
         <h6>who's the snare drum?</h6>
-        <form>
-            <input type="text" id="text-input" name="color" value="color">
+        <form id="my-form">
+            <input type="text" id="text-input" name="color" value="guess color"">
             <input type="submit" value="Submit">
         </form>
     </div>
 
-    <script src="sketch.js"></script>
+    <script src="js/init.js"></script>
+    <script src="js/sketch.js"></script>
     
 </body>
 </html>

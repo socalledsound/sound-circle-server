@@ -86,7 +86,7 @@ class SoundCircle {
     }
 
     increaseSize(){
-        if(this.size > maxSize){
+        if(this.size > this.maxSize){
             this.size = 20;
         } else {
             this.size += 5;

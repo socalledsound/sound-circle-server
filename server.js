@@ -16,20 +16,22 @@ app.use('/', express.static(__dirname + '/public'));
 
 
 class Circle {
-    constructor(id, x, y, size, col){
+    constructor(id, x, y, size, col, velocityX, velocityY){
         this.id = id;
         this.pos = {x: x, y: y};
         this.size = size;
         this.col = col;
+        this.velocity = {x: velocityX, y: velocityY}
     }
 }
 
 
 
 class Player {
-    constructor(id, circleData){
+    constructor(id, playingVal, circleData){
         this.id = id;
-        this.circle = new Circle(id, circleData.pos.x, circleData.pos.y, circleData.size, circleData.col);
+        this.playing = playingVal;
+        this.circle = new Circle(id, circleData.x, circleData.y, circleData.size, circleData.col, circleData.velocity.x, circleData.velocity.y);
         this.messages = [];
     }
 }
@@ -38,12 +40,21 @@ class Player {
 
 io.on('connection', function(socket){
     console.log('client connected, new player id is:' + socket.id);
+    const playersData = [...players.values()];
+    socket.emit('init', playersData);
 
     socket.on('start', (data) => {
-        const player = new Player(socket.id, data)
-        console.log(data);
-        players.set(socket.id, player);
-        console.log(players);
+        if(data === 'non-player'){
+            console.log('non player joined');
+            const player = new Player(socket.id, false, data);
+            players.set(socket.id, player);
+        } else {
+            console.log('player joined');
+            const player = new Player(socket.id, true, data)
+            players.set(socket.id, player);
+            console.log(players);
+        }
+
     });
 
     socket.on('update', (data) => {
