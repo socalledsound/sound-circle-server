@@ -1,5 +1,7 @@
+
+
 class SoundCircle {
-    constructor(x, y, size, col){
+    constructor(x, y, size, col, soundNum){
         this.pos = createVector(x, y);
         this.velocity = createVector(0, 0);
         this.acceleration = createVector(0, 0);
@@ -17,6 +19,7 @@ class SoundCircle {
         this.osc.start();
         this.osc.amp(0.0);
         this.env.play(osc);
+        this.soundNum = soundNum
  
     }
 
@@ -39,12 +42,13 @@ class SoundCircle {
               
                  this.resolveCollision(this, circle);
                  console.log('collided');
-                 const freq = this.size * 10;
+                //  const freq = this.size * 10;
+                 const num = this.soundNum;
                  if(!this.playing){
                      this.playing = true;
                     //  this.osc.amp(1.0);
                     //  this.env.play(osc);
-                     socket.emit('playSound', freq);
+                     socket.emit('playSound', num);
                     setTimeout(()=>this.playing = false, 2000);
                  }
                 

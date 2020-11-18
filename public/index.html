@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
+    <script src="libs/howler.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.8.0/p5.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.8.0/addons/p5.dom.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.8.0/addons/p5.sound.min.js"></script>
@@ -14,11 +15,58 @@
 <body>
     <div class="header">
         <h1>sounding among us</h1>
-        <h6>who's the snare drum?</h6>
-        <form id="my-form">
-            <input type="text" id="text-input" name="color" value="guess color"">
-            <input type="submit" value="Submit">
+        <h4>figure out which color is the sound of a disappearing larynx</h6>
+        <form id="guess-form">
+            <label for="color">guess color:</label>
+            <input type="text" id="text-input" name="color" value="">
+            <input class='submit-button' type="submit" value="submit">
         </form>
+
+        <div class="new-message">
+            <form id="chat-form">
+                <input type="text" id="chat-input" name="color" value="">
+                <input class='submit-button' type="submit" value="send">
+            </form>
+        </div>
+
+    </div>
+
+    <div class="chat">
+        <div class="message" id="red">
+            <!-- <div class="identifier"  id="red"></div> -->
+            <div class="message-text">Hi this is some message text and it might get kind of long so I should check that out</div>
+        </div>
+
+        <div class="message" id="green">
+            <!-- <div class="identifier"  id="red"></div> -->
+            <div class="message-text">Hi this is some message text and it might get kind of long so I should check that out</div>
+        </div>
+
+        <div class="message" id="red">
+            <!-- <div class="identifier"  id="red"></div> -->
+            <div class="message-text">Hi this is some message text and it might get kind of long so I should check that out</div>
+        </div>
+
+        <div class="message" id="red">
+            <!-- <div class="identifier"  id="red"></div> -->
+            <div class="message-text">Hi this is some message text and it might get kind of long so I should check that out</div>
+        </div>
+
+
+        <div class="message" id="red">
+            <!-- <div class="identifier"  id="red"></div> -->
+            <div class="message-text">Hi this is some message text and it might get kind of long so I should check that out</div>
+        </div>
+
+        <div class="message" id="red">
+            <!-- <div class="identifier"  id="red"></div> -->
+            <div class="message-text">Hi this is some message text and it might get kind of long so I should check that out</div>
+        </div>
+
+        <div class="message" id="green">
+            <!-- <div class="identifier"  id="red"></div> -->
+            <div class="message-text">Hi this is some message text and it might get kind of long so I should check that out</div>
+        </div>
     </div>
 
     <script src="js/init.js"></script>

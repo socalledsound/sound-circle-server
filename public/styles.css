@@ -6,8 +6,64 @@ h6 {
     margin-bottom: 0px;
 }
 
-.header {
-    margin-bottom: 10px;
-    margin-top: -10px;
+input {
+    width: 320px;
+    height: 50px;
+    font-size: 25px;
 }
+
+.submit-button {
+    width: 90px;
+    height: 50px;
+}
+
+.header {
+    margin-bottom: 50px;
+    margin-top: -10px;
+    margin-left: 20px;
+}
+
+
+.new-message {
+    position: absolute;
+    left: 650px;
+    top: 170px;
+}
+
+
+.chat {
+    position: absolute;
+    left: 650px;
+    width: 400px;
+    height: 700px;
+    overflow: scroll;
+}
+
+.message {
+    margin-bottom: 10px;
+}
+
+.message-text {
+    display: inline-block;
+    padding: 10px;
+
+}
+
+.identifier{
+    
+    width: 30px;
+    height: 20px;
+    display: inline-block;
+}
+
+#red {
+    border: 4px solid red;
+    border-radius: 7px;
+}
+
+#green {
+    border: 4px solid green;
+    border-radius: 7px;
+}
+
 

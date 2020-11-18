@@ -1,9 +1,9 @@
 function setup(){
-    createCanvas(600, 600);
-    env = new p5.Envelope(0.01, 0.7, 0.3, 0.0);
-    osc = new p5.Oscillator('sine');
-    osc.start();
-    env.play(osc);
+    createCanvas(600, 700);
+    // env = new p5.Envelope(0.01, 0.7, 0.3, 0.0);
+    // osc = new p5.Oscillator('sine');
+    // osc.start();
+    // env.play(osc);
 }
 
 function draw(){
@@ -15,7 +15,7 @@ function draw(){
 
 
    
-console.log(otherCircles);
+// console.log(otherCircles);
 
 otherCircles.forEach(circle => {
     displayCircle(circle);
@@ -55,17 +55,19 @@ function displayCircle(circle){
     ellipse(pos.x, pos.y, size);
 }
 
-function playSound(freq){
-    osc.freq(freq);
+function playSound(num){
+    // osc.freq(freq);
     // osc.amp(1.0);
-    env.play(osc);
+    // env.play(osc);
+    sounds[num].play();
 }
 
 function transmitSound(){
     console.log('transmitting');
-    const freq = myCircle.size * 10;
-    playSound(freq);
-    socket.emit('playSound', freq); 
+    // const freq = myCircle.size * 10;
+    const num = myCircle.soundNum;
+    // playSound(num);
+    socket.emit('playSound', num); 
 }
 
 function updateMyCircle(){
@@ -78,14 +80,15 @@ function updateMyCircle(){
 }
 
 function emitUpdate(){
-    console.log('emitting update');
+    // console.log('emitting update');
     if(myCircle != null && joined){
         const circleUpdate = {
             id:socket.id,
             pos: {x: myCircle.pos.x, y: myCircle.pos.y},
             size: myCircle.size,
             col: myCircle.col,
-            velocity: {x: myCircle.velocity.x, y: myCircle.velocity.y},  
+            velocity: {x: myCircle.velocity.x, y: myCircle.velocity.y}, 
+            soundNum: myCircle.soundNum, 
         } 
         const newData = {
             id: socket.id,
@@ -102,6 +105,7 @@ function emitUpdate(){
             size: 0,
             col: 'white',
             velocity: {x: 0, y: 0},  
+            soundNum: null,
         } 
 
         const data = {

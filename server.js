@@ -74,9 +74,9 @@ io.on('connection', function(socket){
 
     });
 
-    socket.on('playSound', (freq) => {
+    socket.on('playSound', (num) => {
         // console.log('play sound message received', freq);
-        socket.broadcast.emit('playFreq', freq);
+        socket.broadcast.emit('playFreq', num);
     })
 
 

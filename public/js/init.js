@@ -1,4 +1,5 @@
-// const colors = ['green', 'red', 'purple', 'blue', 'pink', 'orange', 'yellow', 'aqua', 'black', 'white'];
+const numSounds = 7;
+const sounds = Array.from({ length: numSounds}, (e, i) => new Howl({ src: `sounds/${i}.mp3`, html5: false, volume: 0.9, loop: false }));
 const colors = ['green', 'red'];
 let usedColors = [];
 let availableColors = colors.filter(el => usedColors.indexOf(el) < 0);
@@ -14,16 +15,17 @@ const socket = io.connect();
 socket.on('connect', (data) => {
     console.log('client connected');
     socket.on('init', (players) => {
-        console.log(players);
+        // console.log(players);
         if(players.length < availableColors.length){
             joined = true;
-            myCircle = new SoundCircle(random(50, width-50), random(50, height-50), random(20,40), availableColors[Math.floor(Math.random() * availableColors.length)]);
+            myCircle = new SoundCircle(random(50, width-50), random(50, height-50), random(20,40), availableColors[Math.floor(Math.random() * availableColors.length)], players.length);
             // myCircle = new SoundCircle(random(50, width-50), random(50, height-50), random(20,40), 'red');
             const initCircleData = {
                 pos: { x: myCircle.pos.x, y: myCircle.pos.y},
                 size: myCircle.size,
                 col: myCircle.col,
                 velocity: {x: 0, y: 0},
+                
             }
             
             socket.emit('start', initCircleData);
@@ -51,21 +53,21 @@ socket.on('state-update', (data) => {
     })  
 })
 
-socket.on('playFreq', (freq) => {
-    console.log('received play sound message');
-    osc.freq(freq);
-    env.play(osc);
-    playSound(freq);
+socket.on('playFreq', (num) => {
+    // console.log('received play sound message');
+    // osc.freq(freq);
+    // env.play(osc);
+    playSound(num);
 })
 
 
 
 
-const form = document.querySelector('#my-form');
+const form = document.querySelector('#guess-form');
 form.addEventListener("submit", processForm);
 
 const it = colors[Math.floor(Math.random() * colors.length)];
-console.log(it);
+// console.log(it);
 
 
 function processForm(e) {
@@ -84,10 +86,10 @@ function checkGuess(guess){
 
 function updateColors(){
     players.forEach(player => {
-        console.log(player.circle.col);
+        // console.log(player.circle.col);
         usedColors.push(player.circle.col);
         availableColors = colors.filter(el => usedColors.indexOf(el) < 0);
-        console.log(availableColors);
+        // console.log(availableColors);
     })
 }
 
