@@ -59,6 +59,7 @@ function playSound(num){
     // osc.freq(freq);
     // osc.amp(1.0);
     // env.play(osc);
+    getAudioContext().resume();
     sounds[num].play();
 }
 
