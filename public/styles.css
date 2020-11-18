@@ -6,11 +6,15 @@ h6 {
     margin-bottom: -20px;
 }
 
+#colors{
+    margin-bottom: 20px;
+}
+
 input {
     width: 320px;
     height: 50px;
     font-size: 25px;
-    margin-top: 20px;
+
 }
 
 .submit-button {
