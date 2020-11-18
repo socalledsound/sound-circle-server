@@ -1,6 +1,6 @@
-const numSounds = 7;
+const numSounds = 8;
 const sounds = Array.from({ length: numSounds}, (e, i) => new Howl({ src: `sounds/${i}.mp3`, html5: false, volume: 0.9, loop: false }));
-const colors = ['green', 'red'];
+const colors = ['lime', 'maroon', 'darkviolet', 'yellow', 'orange', 'black', 'navy', 'magenta'];
 let usedColors = [];
 let availableColors = colors.filter(el => usedColors.indexOf(el) < 0);
 let myCircle = null;
