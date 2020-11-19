@@ -11,6 +11,7 @@ let sorryText = 'sorry this game is full but you can still chat';
 let env, osc;
 let joined = false;
 const socket = io.connect();
+let foods = [];
 
 socket.on('connect', (data) => {
     console.log('client connected');
@@ -78,8 +79,6 @@ const colorsHeading = document.querySelector('#colors').innerHTML = `the colors 
 
 function processForm(e) {
     e.preventDefault();
-    console.log(e.target);
-    console.log(e.target[0].value);
     const guess = e.target[0].value;
     checkGuess(guess)
     return false;
@@ -141,6 +140,7 @@ function addMessageToChat(message){
     chat.appendChild(messageDiv);
 
 }
+
 
 
 {/* <div class="message">
