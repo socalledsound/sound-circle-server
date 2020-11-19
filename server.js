@@ -11,6 +11,7 @@ const LOCALHOSTPORT = 7000;
 
 // let circles = new Map;
 let players = new Map;
+// let messages = [];
 
 app.use('/', express.static(__dirname + '/public'));
 
@@ -78,6 +79,13 @@ io.on('connection', function(socket){
         // console.log('play sound message received', freq);
         socket.broadcast.emit('playFreq', num);
     })
+
+    socket.on('newMessage', (message) => {
+        console.log(message);
+        // messages.push(message);
+        socket.broadcast.emit('updateChat', message);
+    })
+
 
 
     socket.on('disconnect', function() {

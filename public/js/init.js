@@ -60,14 +60,17 @@ socket.on('playFreq', (num) => {
     playSound(num);
 })
 
+socket.on('updateChat', (message) => {
+        addMessageToChat(message);
+})
 
 
 
-const form = document.querySelector('#guess-form');
-form.addEventListener("submit", processForm);
+const colorForm = document.querySelector('#guess-form');
+colorForm.addEventListener("submit", processForm);
 
 const it = colors[Math.floor(Math.random() * colors.length)];
-// console.log(it);
+console.log(it);
 
 const colorsHeading = document.querySelector('#colors').innerHTML = `the colors are: ${colors.join(' ')}`;
 // colorsHeading.innerHtml = `the colors are: ${colors.join()}`;
@@ -75,6 +78,7 @@ const colorsHeading = document.querySelector('#colors').innerHTML = `the colors 
 
 function processForm(e) {
     e.preventDefault();
+    console.log(e.target);
     console.log(e.target[0].value);
     const guess = e.target[0].value;
     checkGuess(guess)
@@ -82,7 +86,9 @@ function processForm(e) {
 }
 
 function checkGuess(guess){
-    if(guess = it){
+    console.log(it);
+    console.log(guess);
+    if(guess === it){
         console.log('you win');
     }
 }
@@ -97,4 +103,46 @@ function updateColors(){
 }
 
 
+const messageForm = document.querySelector('#message-form');
+messageForm.addEventListener("submit", addMessage);
 
+const chat = document.querySelector('#chat');
+
+
+function addMessage(e){
+    e.preventDefault();
+    console.log(e);
+    const messageText = e.target[0].value;
+    createMessage(messageText);
+    
+}
+
+
+function createMessage(messageText){
+    const message = {
+        userId: socket.id,
+        timeCreated: Date.now(),
+        messageText: messageText,
+    }
+    socket.emit('newMessage', message);
+    addMessageToChat(message);
+}
+
+
+
+
+function addMessageToChat(message){
+    const messageDiv = document.createElement('div');
+    messageDiv.style.border = `solid 3px ${colors[Math.floor(Math.random() * colors.length)]}`
+    messageDiv.style.padding = '10px';
+    const messageP = document.createElement('p');
+    messageP.innerHTML = message.messageText;
+    messageDiv.appendChild(messageP);
+    chat.appendChild(messageDiv);
+
+}
+
+
+{/* <div class="message">
+<p class="message-text">hi this is a test message</p>
+</div> */}

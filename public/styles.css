@@ -11,11 +11,40 @@ h6 {
 }
 
 input {
+    display: inline;
+}
+
+#guess-form {
+    
     width: 320px;
+    height: 50px;
+    font-size: 25px;
+    margin-bottom: 50px;
+}
+
+#message-form {
+    position: absolute;
+    left: 600px;
+    top: 150px;
+    width: 600px;
     height: 50px;
     font-size: 25px;
 
 }
+
+#color-input {
+    font-size: 30px;
+    height: 50px;
+    width: 200px;
+}
+
+#message-input {
+    font-size: 30px;
+    height: 50px;
+    width: 400px;
+}
+
+
 
 .submit-button {
     width: 90px;
@@ -32,11 +61,11 @@ input {
 .new-message {
     position: absolute;
     left: 650px;
-    top: 170px;
+    top: 220px;
 }
 
 
-.chat {
+#chat {
     position: absolute;
     left: 650px;
     width: 400px;
